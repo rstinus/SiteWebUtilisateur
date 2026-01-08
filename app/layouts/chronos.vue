@@ -27,7 +27,7 @@
 
             <!-- Bouton action Chronos -->
             <button class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg font-medium transition-colors">
-              Nouvelle Tâche
+              Connexion
             </button>
           </div>
         </nav>
