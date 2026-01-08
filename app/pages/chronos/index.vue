@@ -61,9 +61,6 @@ definePageMeta({
 })
 
 // Utilisation de useState pour partager l'état avec le layout
-const isLoggedIn = useState('isLoggedIn', () => false)
-const user = useState('user', () => ({ 
-  name: 'PlayerSteve', 
-  uuid: 'def58a2b-714f-45ad-9fb3-82b3c127f836' 
-}))
+const isLoggedIn = useState('isLoggedIn')
+const user = useState('user')
 </script>
