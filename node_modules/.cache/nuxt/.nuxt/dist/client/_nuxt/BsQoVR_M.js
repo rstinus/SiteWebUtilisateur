@@ -1,0 +1,10 @@
+import{_ as c}from"./DbRPfkCn.js";import{c as d,o as f,a as e,e as p,b as a,w as r,d as n,n as l,P as i,r as m}from"./l_vXkkhS.js";import{u as x}from"./CDa5qZsQ.js";const u={class:"min-h-screen flex flex-col zenora-theme"},h={class:"w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"},v={class:"container mx-auto px-4 py-4"},_={class:"flex justify-between items-center"},b={class:"space-x-6"},g={class:"flex-grow container mx-auto px-4 py-8"},N={__name:"zenora",setup(y){return x({style:[{children:`
+        .zenora-theme {
+          --primary-color: #6366f1;
+          --secondary-color: #8b5cf6;
+        }
+
+        .zenora-theme a {
+          transition: all 0.2s ease;
+        }
+      `}]}),(s,t)=>{const o=c;return f(),d("div",u,[e("header",h,[e("div",v,[e("nav",_,[t[2]||(t[2]=e("div",{class:"flex items-center space-x-3"},[e("div",{class:"w-10 h-10 bg-white rounded-full flex items-center justify-center"},[e("span",{class:"text-blue-600 font-bold text-xl"},"Z")]),e("h1",{class:"text-2xl font-bold"},"Zenora")],-1)),e("div",b,[a(o,{to:"/users/profil",class:l(["hover:underline",{"font-semibold underline":(s._.provides[i]||s.$route).path.startsWith("/zenora/profile")}])},{default:r(()=>[...t[0]||(t[0]=[n(" Mon Profil ",-1)])]),_:1},8,["class"]),a(o,{to:"/zenora/contact",class:l(["hover:underline",{"font-semibold underline":(s._.provides[i]||s.$route).path.startsWith("/zenora/profile")}])},{default:r(()=>[...t[1]||(t[1]=[n(" Contact ",-1)])]),_:1},8,["class"])])])])]),e("main",g,[m(s.$slots,"default")]),t[3]||(t[3]=p('<footer class="bg-gray-900 text-white"><div class="container mx-auto px-6 py-8"><div class="text-center"><p class="text-gray-400">© 2024 Zenora - Application de bien-être et méditation</p><div class="mt-4 space-x-4"><a href="/mentions-legales" class="text-gray-400 hover:text-white">Mentions légales</a><a href="/confidentialite" class="text-gray-400 hover:text-white">Confidentialité</a><a href="/contact" class="text-gray-400 hover:text-white">Contact</a></div></div></div></footer>',1))])}}};export{N as default};

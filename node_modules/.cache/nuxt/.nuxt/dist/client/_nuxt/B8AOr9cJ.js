@@ -1,0 +1,1 @@
+import{c as o,a as t,o as a}from"./l_vXkkhS.js";const l={__name:"index",setup(r){return(s,e)=>(a(),o("div",null,[...e[0]||(e[0]=[t("h1",{class:"text-3xl font-bold mb-6"},"Tableau de bord Chronos",-1)])]))}};export{l as default};

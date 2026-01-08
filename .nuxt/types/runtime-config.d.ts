@@ -1,0 +1,170 @@
+import { RuntimeConfig as UserRuntimeConfig, PublicRuntimeConfig as UserPublicRuntimeConfig } from 'nuxt/schema'
+  interface SharedRuntimeConfig {
+   app: {
+      buildId: string,
+
+      baseURL: string,
+
+      buildAssetsDir: string,
+
+      cdnURL: string,
+   },
+
+   nitro: {
+      envPrefix: string,
+   },
+  }
+  interface SharedPublicRuntimeConfig {
+   device: {
+      defaultUserAgent: string,
+   },
+
+   cookieControl: {
+      _isPrerendered: boolean,
+
+      barPosition: string,
+
+      closeModalOnClickOutside: boolean,
+
+      colors: {
+         barBackground: string,
+
+         barButtonBackground: string,
+
+         barButtonColor: string,
+
+         barButtonHoverBackground: string,
+
+         barButtonHoverColor: string,
+
+         barTextColor: string,
+
+         checkboxActiveBackground: string,
+
+         checkboxActiveCircleBackground: string,
+
+         checkboxDisabledBackground: string,
+
+         checkboxDisabledCircleBackground: string,
+
+         checkboxInactiveBackground: string,
+
+         checkboxInactiveCircleBackground: string,
+
+         controlButtonBackground: string,
+
+         controlButtonHoverBackground: string,
+
+         controlButtonIconColor: string,
+
+         controlButtonIconHoverColor: string,
+
+         focusRingColor: string,
+
+         modalBackground: string,
+
+         modalButtonBackground: string,
+
+         modalButtonColor: string,
+
+         modalButtonHoverBackground: string,
+
+         modalButtonHoverColor: string,
+
+         modalOverlay: string,
+
+         modalOverlayOpacity: number,
+
+         modalTextColor: string,
+
+         modalUnsavedColor: string,
+      },
+
+      cookies: {
+         necessary: Array<any>,
+
+         optional: Array<any>,
+      },
+
+      cookieExpiryOffsetMs: number,
+
+      cookieNameIsConsentGiven: string,
+
+      cookieNameCookiesEnabledIds: string,
+
+      cookieOptions: {
+         path: string,
+
+         sameSite: string,
+
+         secure: any,
+      },
+
+      isAcceptNecessaryButtonEnabled: boolean,
+
+      isControlButtonEnabled: boolean,
+
+      isCookieIdVisible: boolean,
+
+      isCssEnabled: boolean,
+
+      isCssPonyfillEnabled: boolean,
+
+      isDashInDescriptionEnabled: boolean,
+
+      isIframeBlocked: boolean,
+
+      isModalForced: boolean,
+
+      declineAllAcceptsNecessary: boolean,
+
+      locales: Array<string>,
+
+      localeTexts: {
+         en: {
+            accept: string,
+
+            acceptAll: string,
+
+            bannerDescription: string,
+
+            bannerTitle: string,
+
+            close: string,
+
+            cookiesFunctional: string,
+
+            cookiesNecessary: string,
+
+            cookiesOptional: string,
+
+            decline: string,
+
+            declineAll: string,
+
+            here: string,
+
+            iframeBlocked: string,
+
+            manageCookies: string,
+
+            save: string,
+
+            settingsUnsaved: string,
+         },
+      },
+   },
+  }
+declare module '@nuxt/schema' {
+  interface RuntimeConfig extends UserRuntimeConfig {}
+  interface PublicRuntimeConfig extends UserPublicRuntimeConfig {}
+}
+declare module 'nuxt/schema' {
+  interface RuntimeConfig extends SharedRuntimeConfig {}
+  interface PublicRuntimeConfig extends SharedPublicRuntimeConfig {}
+}
+declare module 'vue' {
+        interface ComponentCustomProperties {
+          $config: UserRuntimeConfig
+        }
+      }
