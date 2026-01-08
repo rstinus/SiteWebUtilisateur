@@ -1,1 +1,0 @@
-import{c as t,a as n,o}from"./l_vXkkhS.js";const l={__name:"index",setup(a){return(r,e)=>(o(),t("div",null,[...e[0]||(e[0]=[n("h1",{class:"text-3xl font-bold mb-6"},"Bienvenue sur Zenora",-1)])]))}};export{l as default};

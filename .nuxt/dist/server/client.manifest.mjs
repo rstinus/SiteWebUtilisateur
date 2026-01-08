@@ -1,1 +1,0 @@
-export { default } from "file:///home/rstinus/Documents/CiteEngrenage/SiteWebUtilisateur/node_modules/.pnpm/@nuxt+vite-builder@4.2.2_@types+node@25.0.0_lightningcss@1.30.2_magicast@0.5.1_nuxt@4.2_db7772387f4d760e43d3f2faae0afbd0/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"
