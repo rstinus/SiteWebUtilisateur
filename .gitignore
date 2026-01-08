@@ -1,0 +1,25 @@
+# --- Dossiers demandés ---
+.nuxt
+.output
+
+# --- Fichiers demandés (Sécurité : on ignore tout sauf la configuration) ---
+*.ts
+*.json
+
+# On ré-autorise les fichiers vitaux pour que le projet puisse démarrer sur une autre machine
+!package.json
+!package-lock.json
+!tsconfig.json
+!nuxt.config.ts
+!app.vue
+
+# --- Dépendances ---
+node_modules/
+
+# --- Environnement ---
+.env
+*.log
+
+# --- Dossiers de build optionnels ---
+dist/
+.cache/
