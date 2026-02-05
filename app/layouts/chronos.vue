@@ -20,7 +20,7 @@
             >
               Tableau de bord
             </NuxtLink>
-
+            
             <button 
               v-if="!isLoggedIn"
               @click="login"
@@ -32,8 +32,8 @@
             <div v-else class="flex items-center space-x-4">
               <div class="flex items-center space-x-2 bg-gray-700 px-3 py-1 rounded-full border border-gray-600">
                 <img 
-                  :src="`https://crafatar.com/avatars/${user.uuid}?size=24`" 
-                  class="w-6 h-6 rounded" 
+                  :src="`https://mc-heads.net/avatar/${user.uuid}`" 
+                  class="w-6 h-6 rounded"
                   alt="Avatar"
                 />
                 <span class="text-sm font-medium">{{ user.name }}</span>
@@ -50,14 +50,14 @@
     <div class="flex flex-1">
       <aside class="w-64 bg-gray-50 border-r border-gray-200 p-6">
         <nav class="space-y-2">
-          <h3 class="font-semibold text-gray-500 text-sm uppercase tracking-wider mb-4">Projets</h3>
-          <a href="#" class="block p-2 rounded hover:bg-gray-100">Frontend</a>
-          <a href="#" class="block p-2 rounded hover:bg-gray-100">Backend</a>
-          <a href="#" class="block p-2 rounded hover:bg-gray-100">Design</a>
+          <h3 class="font-semibold text-gray-500 text-sm uppercase tracking-wider mb-4">Info Cité</h3>
+          <NuxtLink to="/chronos/shop" class="block p-2 rounded hover:bg-gray-100">Le shop</NuxtLink>
+          <NuxtLink to="/chronos/classement" class="block p-2 rounded hover:bg-gray-100">Le classement</NuxtLink>
+          <NuxtLink to="/chronos/calendrier" class="block p-2 rounded hover:bg-gray-100">Le calendrier</NuxtLink>
 
           <h3 class="font-semibold text-gray-500 text-sm uppercase tracking-wider mt-8 mb-4">Équipes</h3>
-          <a href="#" class="block p-2 rounded hover:bg-gray-100">Développement</a>
-          <a href="#" class="block p-2 rounded hover:bg-gray-100">Marketing</a>
+          <NuxtLink to="/chronos/ventes" class="block p-2 rounded hover:bg-gray-100">Les ventes</NuxtLink>
+          <NuxtLink to="/chronos/joueurs" class="block p-2 rounded hover:bg-gray-100">Les joueurs</NuxtLink>
         </nav>
       </aside>
 
@@ -78,7 +78,7 @@
 // Utilisation de useState pour que l'état soit partagé avec tes pages (index.vue)
 const isLoggedIn = useState('isLoggedIn', () => false)
 const user = useState('user', () => ({
-  name: 'PlayerSteve',
+  name: 'Vikings92',
   uuid: 'def58a2b-714f-45ad-9fb3-82b3c127f836'
 }))
 

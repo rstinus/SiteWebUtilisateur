@@ -8,5 +8,13 @@ export default defineNuxtConfig({
     '@nuxtjs/device',
     '@nuxtjs/tailwindcss',
     '@dargmuesli/nuxt-cookie-control'
-  ]
+  ],
+  nitro: {
+    externals: {
+      inline: ['entities']
+    }
+  },
+  build: {
+    transpile: ['@dargmuesli/nuxt-cookie-control']
+  }
 })

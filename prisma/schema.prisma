@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model hz_alternative_scores_teams {
+  id         Int      @id @default(autoincrement())
+  team_name  String
+  score_name String
+  score      Int      @default(0)
+  
+  // Utilise DateTime pour les dates, Prisma s'occupe de la conversion MySQL
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
