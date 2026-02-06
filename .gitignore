@@ -13,6 +13,10 @@
 !nuxt.config.ts
 !app.vue
 
+# --- AUTORISATION DU DOSSIER SERVER ---
+# On autorise tout le dossier server et son contenu
+!/server/**
+
 # --- Dépendances ---
 node_modules/
 
@@ -23,5 +27,7 @@ node_modules/
 # --- Dossiers de build optionnels ---
 dist/
 .cache/
+
+/app/generated/prisma
 
 /app/generated/prisma

@@ -6,7 +6,7 @@
         <p class="text-gray-500">Achetez les ressources nécessaires pour votre survie.</p>
       </div>
       <div class="bg-red-50 text-red-600 px-4 py-2 rounded-full text-sm font-bold border border-red-100">
-        Monnaie : Émeraudes 💎
+        Monnaie : Engrenage
       </div>
     </div>
 
@@ -21,20 +21,20 @@
             <span class="text-3xl">📦</span>
           </div>
           <div class="text-right">
-            <span class="block text-2xl font-black text-gray-800">{{ item.price || item.score }}</span>
-            <span class="text-xs font-bold text-gray-400 uppercase">Points / Prix</span>
+            <span class="block text-2xl font-black text-gray-800">{{ item.price}}</span>
+            <span class="text-xs font-bold text-gray-400 uppercase">Prix</span>
           </div>
         </div>
         
         <div>
           <h3 class="text-lg font-bold text-gray-800 mb-1 capitalize">
-            {{ item.item_name || item.name || 'Article sans nom' }}
+            {{ item.material || item.name || 'Article sans nom' }}
           </h3>
           <p class="text-sm text-gray-400 mb-4">Disponible immédiatement au spawn.</p>
         </div>
 
         <button class="w-full py-3 bg-gray-900 text-white rounded-xl font-bold hover:bg-red-600 transition-colors">
-          Acheter en jeu
+          Achetable en jeu
         </button>
       </div>
     </div>

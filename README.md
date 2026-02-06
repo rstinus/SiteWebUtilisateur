@@ -42,3 +42,11 @@ pnpm preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+# Initalisation de l'API pour la BD
+```
+pnpm add -D prisma@6
+pnpm add -D @prisma/client@6
+npx prisma init
+pnpm exec prisma db pull
+```
