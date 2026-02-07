@@ -19,14 +19,16 @@
       >
         <div class="h-12 w-12 rounded-lg bg-gray-100 overflow-hidden border border-gray-200">
           <img 
-            :src="`https://minotar.net/helm/${player.player_uuid}/48`" 
+            :src="`https://mc-heads.net/avatar/${player.player_uuid}/48`" 
             alt="Skin"
             class="h-full w-full object-cover"
           />
         </div>
         
         <div>
-          <h3 class="font-bold text-gray-800">Joueur</h3>
+          <h3 class="font-bold text-gray-800">
+            {{ user.name || 'Joueur inconnu' }}
+          </h3>
           <p class="text-xs text-gray-400 font-mono">{{ player.player_uuid.substring(0, 13) }}...</p>
         </div>
       </div>
@@ -53,6 +55,8 @@ definePageMeta({
 
 // Récupération de l'état de connexion (défini dans ton app)
 const isLoggedIn = useState('isLoggedIn')
+const user = useState('user', () => ({
+}))
 
 // Appel de ton API server/api/scores.ts
 // Note : Tu peux renommer ton fichier API en joueurs.ts si tu préfères

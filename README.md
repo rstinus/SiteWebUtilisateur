@@ -49,4 +49,5 @@ pnpm add -D prisma@6
 pnpm add -D @prisma/client@6
 npx prisma init
 pnpm exec prisma db pull
+pnpm exec prisma generate
 ```
