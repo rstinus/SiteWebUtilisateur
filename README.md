@@ -51,3 +51,9 @@ npx prisma init
 pnpm exec prisma db pull
 pnpm exec prisma generate
 ```
+## Pour initialiser la 2e BD
+```
+Renommer le fichier prisma.config.ts en prisma.config.old
+pnpm exec prisma db pull --schema=./prisma_secondary/schema.prisma
+pnpm exec prisma generate --schema=./prisma_secondary/schema.prisma
+```

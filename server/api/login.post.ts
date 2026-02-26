@@ -7,56 +7,81 @@ const formatUUID = (uuid: string) => {
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-  const username = body.username?.trim() // On enlève les espaces inutiles
+  const username = body.username?.trim()
 
   if (!username) throw createError({ statusCode: 400, statusMessage: 'Pseudo requis' })
 
   try {
-    console.log(`Recherche de l'UUID pour : ${username}...`)
-    
-    // On appelle Mojang
-    const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${username}`)
-    
-    if (response.status === 404) {
-      console.error("Réponse Mojang : Ce joueur n'existe pas (Compte Premium requis).")
-      throw createError({ statusCode: 404, statusMessage: "Ce compte Minecraft n'existe pas." })
-    }
+    let playerUUID: string | null = null
+    let officialName: string = username
 
-    if (!response.ok) {
-      console.error(`Erreur API Mojang : ${response.status}`)
-      throw createError({ statusCode: 503, statusMessage: "Service Mojang indisponible." })
-    }
-
-    const data: any = await response.json()
-    const dashedUUID = formatUUID(data.id)
-    console.log(`UUID trouvé : ${dashedUUID}`)
-
-    // Recherche en DB
-    const player = await prisma.hz_team_players.findFirst({
-      where: { player_uuid: dashedUUID }
+    const citePlayer = await prisma.customplayer.findFirst({
+      where: { name: username }
     })
 
-    if (!player) {
-      console.warn(`Joueur ${username} (${dashedUUID}) non trouvé dans hz_team_players.`)
-      throw createError({ statusCode: 401, statusMessage: "Tu n'es pas inscrit dans une equipe." })
+    if (citePlayer) {
+      playerUUID = citePlayer.uuidPlayer
+      officialName = citePlayer.name || username
+    } else {
+      const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${username}`)
+      if (!response.ok) {
+        throw createError({ statusCode: 404, statusMessage: "Compte Minecraft introuvable" })
+      }
+      const data: any = await response.json()
+      playerUUID = formatUUID(data.id)
+      officialName = data.name
     }
+
+    const horizonPlayer = await prisma.hz_team_players.findFirst({
+      where: { player_uuid: playerUUID! }
+    })
+
+    if (!horizonPlayer) {
+      throw createError({ 
+        statusCode: 401, 
+        statusMessage: "Tu n'es pas inscrit dans une équipe sur Horizon." 
+      })
+    }
+
+    const citeTeam = await prisma.team.findUnique({
+      where: { nomTeam: horizonPlayer.team_name }
+    })
+
+    if (!citeTeam) {
+      throw createError({ 
+        statusCode: 500, 
+        statusMessage: "Équipe Horizon non configurée dans la base Cité." 
+      })
+    }
+
+    await prisma.customplayer.upsert({
+      where: {
+        uuidPlayer: playerUUID!
+      },
+      update: {
+        name: officialName,
+        idTeam: citeTeam.idTeam
+      },
+      create: {
+        uuidPlayer: playerUUID!,
+        name: officialName,
+        idTeam: citeTeam.idTeam
+      }
+    })
 
     return {
       success: true,
       player: {
-        uuid: dashedUUID,
-        team: player.team_name,
-        name: data.name
+        uuid: playerUUID,
+        name: officialName,
+        team: horizonPlayer.team_name
       }
     }
 
   } catch (error: any) {
-    // On log l'erreur complète dans le terminal pour toi
-    console.error("DÉTAIL ERREUR LOGIN :", error)
-    
     throw createError({ 
       statusCode: error.statusCode || 500, 
-      statusMessage: error.statusMessage || "Erreur de connexion" 
+      statusMessage: error.statusMessage || "Erreur lors de la connexion" 
     })
   }
 })

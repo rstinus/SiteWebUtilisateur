@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen flex flex-col chronos-theme bg-gray-50">
-    <header class="w-full bg-gradient-to-r from-gray-900 to-gray-800 text-white shadow-xl sticky top-0 z-50">
+  <div class="min-h-screen flex flex-col chronos-theme bg-gray-50 dark:bg-neutral-800 transition-colors">
+    <header class="w-full bg-neutral-900 text-white shadow-xl sticky top-0 z-50">
       <div class="container mx-auto px-4 py-3 sm:py-4">
         <nav class="flex justify-between items-center">
           <div class="flex items-center space-x-3">
@@ -14,10 +14,25 @@
               </svg>
             </button>
             
-            <img src="/chronos.png" class="w-10 rounded shadow" />
-            <h1 class="text-lg sm:text-2xl font-bold tracking-tight">Chronos</h1>
+            <div class="flex flex-row items-center justify-center gap-6">
+              <button 
+              @click="navigateTo('/chronos')"
+              
+              class="flex flex-row items-center gap-3 p-2"
+              >
+              <img src="/logoProjetChronos.png" class="w-10" />
+              <h1 class="text-lg sm:text-2xl font-bold tracking-tight">Projet Chronos</h1>
+              </button>
+            </div>
           </div>
-
+          <button 
+            @click="navigateTo('/chronos/register')" 
+            class="bg-orange-800 hover:bg-amber-900 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all active:scale-95"
+          >
+            <span class="sm:hidden">Inscription</span>
+            <span class="hidden sm:inline">Inscription Team & Joueurs Cité</span> 
+          </button>
+<!--
           <div class="flex items-center space-x-2 sm:space-x-6">
 
             <button 
@@ -48,27 +63,49 @@
               </button>
             </div>
           </div>
+-->
         </nav>
       </div>
     </header>
 
-    <div class="flex flex-1 relative">
+    <div class="flex flex-1 relative items-start">
       <aside 
         :class="[
-          'fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 p-6 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0',
-          isMenuOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full md:translate-x-0'
+          'fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 p-6 transform transition-transform duration-300 ease-in-out flex flex-col',
+          /* 2. On force le sticky sous le header (72px) */
+          'md:sticky md:top-[72px] md:translate-x-0',
+          /* 3. LE RÉGLAGE CLÉ : h-[calc(100vh-72px)] force la bordure jusqu'en bas de l'écran */
+          'h-screen md:min-h-[calc(100vh-72px)] md:h-auto',
+          isMenuOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full md:translate-x-0',
+          'dark:bg-neutral-800 dark:border-gray-700'
         ]"
       >
-        <nav class="space-y-2 pt-16 md:pt-0">
-          <h3 class="font-bold text-gray-400 text-[10px] uppercase tracking-widest mb-4">Info Cité</h3>
-          <NuxtLink @click="isMenuOpen = false" to="/chronos/shop" class="nav-link block py-3">Le shop</NuxtLink>
-          <NuxtLink @click="isMenuOpen = false" to="/chronos/classement" class="nav-link block py-3">Le classement</NuxtLink>
-          <NuxtLink @click="isMenuOpen = false" to="/chronos/calendrier" class="nav-link block py-3">Le calendrier</NuxtLink>
+        <nav class="pt-16 md:pt-0 dark:text-gray-300 flex-1 overflow-y-auto">
+          <div class="grid grid-cols-3 items-center pb-4">
+            <h2 class="col-span-2">Mode éclairage</h2>
+            <div class="col-span-1 flex justify-end items-center">
+              <DarkLightMode />
+            </div>
+          </div>
 
-          <h3 class="font-bold text-gray-400 text-[10px] uppercase tracking-widest mt-8 mb-4">Équipes</h3>
-          <NuxtLink @click="isMenuOpen = false" to="/chronos/ventes" class="nav-link block py-3">Les ventes</NuxtLink>
-          <NuxtLink @click="isMenuOpen = false" to="/chronos/joueurs" class="nav-link block py-3">Les joueurs</NuxtLink>
+          <h3 class="font-bold text-gray-600 text-[12px] uppercase tracking-widest mt-4 pb-2">Projet Chronos</h3>
+          <NuxtLink @click="isMenuOpen = false" to="/chronos/calendrier" class="nav-link indent-4 font-bold text-gray-500 text-[14px] block pb-2">Le calendrier</NuxtLink>
+          <a @click="isMenuOpen = false" href="https://www.wiki.projetchronos.fr" class="nav-link indent-4 font-bold text-gray-500 text-[14px] block pb-2">Le wiki</a>
+
+          <h3 class="font-bold text-gray-600 text-[12px] uppercase tracking-widest mt-4 pb-2">Info Cité</h3>
+          <NuxtLink @click="isMenuOpen = false" to="/chronos/shop" class="nav-link indent-4 font-bold text-gray-500 text-[14px] block pb-2">Le shop</NuxtLink>
+          <NuxtLink @click="isMenuOpen = false" to="/chronos/classement" class="nav-link indent-4 font-bold text-gray-500 text-[14px] block pb-2">Le classement</NuxtLink>
+          <NuxtLink @click="isMenuOpen = false" to="/chronos/tetes" class="nav-link indent-4 font-bold text-gray-500 text-[14px] block pb-2">Chasse au têtes</NuxtLink>
+          <a @click="isMenuOpen = false" href="https://projetchronos-shop.tebex.io/" class="nav-link indent-4 font-bold text-gray-500 text-[14px] block pb-2">La boutique</a>
+
+          <h3 class="font-bold text-gray-600 text-[12px] uppercase tracking-widest mt-4 pb-2">Équipes cité</h3>
+          <NuxtLink @click="isMenuOpen = false" to="/chronos/ventes" class="nav-link indent-4 font-bold text-gray-500 text-[14px] block pb-2">Les ventes</NuxtLink>
+          <NuxtLink @click="isMenuOpen = false" to="/chronos/joueurs" class="nav-link indent-4 font-bold text-gray-500 text-[14px] block pb-2">Les joueurs</NuxtLink>
         </nav>
+
+        <div class="mt-auto pt-6">
+          <BannerAdAside />
+        </div>
       </aside>
 
       <div 
@@ -77,23 +114,82 @@
         class="fixed inset-0 bg-black/50 z-30 md:hidden"
       ></div>
 
-      <main class="flex-1 p-4 sm:p-8 w-full overflow-x-hidden">
+      <main class="flex-1 p-4 sm:p-8 w-full dark:bg-neutral-800 min-h-[120vh]">
         <slot />
       </main>
     </div>
+    
+    <CookieBanner />
+    <footer class="bg-neutral-900 text-white border-t border-gray-800">
+      <div class="container mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 place-items-center gap-12 mb-12">
+          
+          <div class="space-y-4  text-center sm:text-left">
+            <h3 class="text-gray-100 font-bold text-sm uppercase">Projet Chronos</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Nous sommes un groupe de pote passionés de ce jeu cubique qui est Minecraft. <br/>
+              Nous donnons de notre temps et de notre énergie pour continuer à faire vivre la communauté Minecraft Française.
+            </p>
+          </div>
 
-    <footer class="bg-gray-900 text-white border-t border-gray-800">
-      <div class="container mx-auto px-6 py-6 text-center">
-        <p class="text-gray-500 text-[10px] sm:text-sm uppercase tracking-tighter">
-          © 2026 Projet Chronos - Propulsé par la Cité
-        </p>
+          <div class="space-y-4">
+            <h3 class="text-gray-100 font-bold text-sm uppercase">Juridique</h3>
+            <ul class="space-y-2 text-gray-500 text-sm">
+              <li><NuxtLink to="/chronos/mentions-legales" class="hover:text-orange-800 transition-colors">Mentions Légales</NuxtLink></li>
+              <li><NuxtLink to="/chronos/confidentialite" class="hover:text-orange-800 transition-colors">Politique de Confidentialité</NuxtLink></li>
+              <li><NuxtLink to="/chronos/cgu" class="hover:text-orange-800 transition-colors">CGU</NuxtLink></li>
+              <li>
+                <button 
+                  @click="openCookieSettings" 
+                  class="hover:text-orange-800 transition-colors text-left"
+                >
+                  Modifier les paramètres cookies
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-gray-100 font-bold text-sm uppercase">Nous contacter</h3>
+            <p class="text-gray-500 text-sm">Un problème ? Une question ?</p>
+            <a href="mailto:projetchronosofficiel@gmail.com" class="block text-orange-800 font-bold text-sm hover:underline">
+              projetchronosofficiel@gmail.com
+            </a>
+            <div class="flex space-x-4 pt-2 place-items-center">
+              <a href="https://www.instagram.com/projetchronosofficiel" class="text-gray-400 hover:text-white transition-colors text-xs uppercase font-black">
+                <img src="/logoInstagram.png" class="w-9 h-9 inline-block mr-1 -mt-0.5" />
+              </a>
+              <a href="https://www.tiktok.com/@projetchronosofficial" class="text-gray-400 hover:text-white transition-colors text-xs uppercase font-black">
+                <img src="/logoTikTok.png" class="w-9 h-9 inline-block mr-1 -mt-0.5" />
+              </a>
+              <a href="https://youtube.com/@projetchronos" class="text-gray-400 hover:text-white transition-colors text-xs uppercase font-black">
+                <img src="/logoYoutube.png" class="w-9 h-7 inline-block mr-1 -mt-0.5" />
+              </a>
+              <a href="https://x.com/Projet_Chronos" class="text-gray-400 hover:text-white transition-colors text-xs uppercase font-black">
+                <img src="/logoX.png" class="w-9 h-9 inline-block mr-1 -mt-0.5" />
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p class="text-gray-600 text-[12px] uppercase tracking-widest">
+            © 2026 PROJET CHRONOS — TOUS DROITS RÉSERVÉS
+          </p>
+          <p class="text-gray-600 text-[12px] uppercase tracking-widest italic">
+            Propulsé par Projet Chonos
+          </p>
+        </div>
       </div>
     </footer>
   </div>
 </template>
 
 <script setup>
-const isMenuOpen = ref(false) // État pour ouvrir/fermer le menu sur mobile
+import BannerAdAside from '~/components/BannerAdAside.vue'
+
+const isMenuOpen = ref(false)
 
 const isLoggedIn = useState('isLoggedIn', () => false)
 const user = useState('user', () => ({
@@ -121,4 +217,10 @@ useHead({
     }
   ]
 })
+
+const showBanner = useState('showCookieBanner')
+
+const openCookieSettings = () => {
+  showBanner.value = true
+}
 </script>

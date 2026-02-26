@@ -1,10 +1,15 @@
 <template>
   <div>
-    <h1 class="text-3xl font-bold mb-6">Tableau de bord Chronos</h1>
+    <div class="grid grid-cols-1 gap-4">
+      <h1 class="text-3xl font-bold mb-6 dark:text-white text-center sm:text-left">Tableau de bord Chronos</h1>
+    </div>
+    <p>
+      <a href="https://discord.gg/nr48gbTwww" class="text-gray-600 font-bold hover:underline ">Discord projet Chronos</a>
+    </p>
 
     <div v-if="isLoggedIn" class="space-y-6">
       
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 dark:bg-neutral-800">
         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-6">
           <img 
             :src="`https://mc-heads.net/avatar/${user.uuid}`" 
@@ -84,11 +89,13 @@
 
     </div>
 
-    <div v-else class="bg-gray-50 border-2 border-dashed border-gray-200 rounded-3xl p-20 text-center">
+    <div v-else class="bg-gray-50 border-2 border-dashed border-gray-200 rounded-3xl p-20 text-center dark:bg-neutral-800 dark:border-gray-700">
       <div class="text-6xl mb-6">🛡️</div>
-      <h2 class="text-2xl font-bold text-gray-800 mb-2">Accès Restreint</h2>
-      <p class="text-gray-500 mb-6">Veuillez vous connecter pour accéder au tableau de bord complet de l'événement.</p>
+      <h2 class="text-2xl font-bold text-gray-800 mb-2 dark:text-white">Accès Restreint</h2>
+      <p class="text-gray-500 mb-6 dark:text-gray-400">Veuillez vous connecter pour accéder au tableau de bord complet de l'événement.</p>
     </div>
+
+    <BannerAd />
 
   </div>
 </template>

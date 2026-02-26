@@ -35,6 +35,7 @@
       </form>
     </div>
   </div>
+  <BannerAd />
 </template>
 
 <script setup>

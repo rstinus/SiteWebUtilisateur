@@ -1,6 +1,7 @@
 # --- Dossiers demandés ---
 .nuxt
 .output
+.zenora
 
 # --- Fichiers demandés (Sécurité : on ignore tout sauf la configuration) ---
 *.ts
@@ -12,6 +13,8 @@
 !tsconfig.json
 !nuxt.config.ts
 !app.vue
+!prisma.config.ts
+!tailwind.config.ts
 
 # --- AUTORISATION DU DOSSIER SERVER ---
 # On autorise tout le dossier server et son contenu

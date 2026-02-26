@@ -5,12 +5,19 @@ export default defineEventHandler(async (event) => {
 
   try {
 
-    const ladder = await prisma.hz_shop_prices.findMany({
-      take: 9,
-      orderBy: { price: 'desc' }
+    const query = getQuery(event)
+    const teamName = query.team as string
+
+    const score = await prisma.hz_teams.findFirst({
+        where: {
+            team_name: teamName
+        },
+        select: {
+            score: true,
+        },
     })
 
-    return ladder
+    return score
 
   } catch (error) {
     console.error("DÉTAIL ERREUR BD :", error)

@@ -202,3 +202,319 @@ model hz_teams {
   updated_at      DateTime?         @default(now()) @db.Timestamp(0)
   hz_team_players hz_team_players[]
 }
+
+model ConditionObjectif {
+  idCondition     Int           @id @default(autoincrement())
+  valeurCondition String?       @db.VarChar(50)
+  inverse         Int?          @db.TinyInt
+  idTeamCondition Int
+  idTache         Int
+  masque          Int?          @default(0) @db.TinyInt
+  TypeCondition   TypeCondition @relation(fields: [idTeamCondition], references: [idTeamCondition], onUpdate: Restrict, map: "ConditionObjectif_ibfk_1")
+  Tache           Tache         @relation(fields: [idTache], references: [idTache], onDelete: NoAction, onUpdate: NoAction, map: "ConditionObjectif_ibfk_2")
+
+  @@index([idTache], map: "idObjectif")
+  @@index([idTeamCondition], map: "idTeamCondition")
+}
+
+model Difficulte {
+  idDifficulte    Int        @id @default(autoincrement())
+  nomDifficulte   String     @db.VarChar(50)
+  colorDifficulte String?    @db.VarChar(50)
+  Objectif        Objectif[]
+}
+
+model Etat {
+  idEtat    Int         @id @default(autoincrement())
+  nomEtat   String      @db.VarChar(50)
+  TeamQuest TeamQuest[]
+}
+
+model Mission {
+  idMission    Int     @id @default(autoincrement())
+  nomMission   String  @db.VarChar(50)
+  descMission  String? @db.VarChar(255)
+  iconMaterial String? @db.VarChar(50)
+  masque       Int?    @default(1) @db.TinyInt
+  idNpc        Int?    @default(0)
+  Quest        Quest[]
+}
+
+model NPC {
+  idNpc       Int     @id @default(autoincrement())
+  nomNpc      String  @default("0") @db.VarChar(50)
+  colorNpc    String  @default("0") @db.VarChar(50)
+  locXNpc     Float   @default(0) @db.Float
+  locYNpc     Float   @default(0) @db.Float
+  locZNpc     Float   @default(0) @db.Float
+  locPitchNpc Float   @default(0) @db.Float
+  locYawNpc   Float   @default(0) @db.Float
+  locWorldNpc String? @db.VarChar(50)
+  skinNpc     String? @db.VarChar(255)
+}
+
+model Objectif {
+  idObjectif   Int            @id @default(autoincrement())
+  nomObjectif  String         @db.VarChar(50)
+  lvlObjectif  Int?
+  idDifficulte Int
+  idQuest      Int
+  Difficulte   Difficulte     @relation(fields: [idDifficulte], references: [idDifficulte], onUpdate: Restrict, map: "Objectif_ibfk_1")
+  Quest        Quest          @relation(fields: [idQuest], references: [idQuest], onUpdate: Restrict, map: "Objectif_ibfk_2")
+  Tache        Tache[]
+  TeamObjectif TeamObjectif[]
+
+  @@index([idDifficulte], map: "idDifficulte")
+  @@index([idQuest], map: "idQuest")
+}
+
+model Quest {
+  idQuest            Int         @id @default(autoincrement())
+  nomQuest           String      @db.VarChar(50)
+  idMission          Int
+  iconMaterial       String?     @db.VarChar(50)
+  resolutionEnMinute Int?        @default(0)
+  multiplicateur     Float?      @default(1) @db.Float
+  Objectif           Objectif[]
+  Mission            Mission     @relation(fields: [idMission], references: [idMission], onUpdate: Restrict, map: "Quest_ibfk_1")
+  Reward             Reward[]
+  TeamQuest          TeamQuest[]
+
+  @@index([idMission], map: "idMission")
+}
+
+model Reward {
+  idReward     Int        @id @default(autoincrement())
+  valeurReward Int
+  idQuest      Int
+  idTypeReward Int
+  Quest        Quest      @relation(fields: [idQuest], references: [idQuest], onUpdate: Restrict, map: "Reward_ibfk_1")
+  TypeReward   TypeReward @relation(fields: [idTypeReward], references: [idTypeReward], onUpdate: Restrict, map: "Reward_ibfk_2")
+
+  @@index([idQuest], map: "idQuest")
+  @@index([idTypeReward], map: "idTypeReward")
+}
+
+model Tache {
+  idTache           Int                 @id @default(autoincrement())
+  nbrIteration      Int
+  idTypeTache       Int
+  idObjectif        Int
+  ConditionObjectif ConditionObjectif[]
+  TypeTache         TypeTache           @relation(fields: [idTypeTache], references: [idTypeTache], onUpdate: Restrict, map: "Tache_ibfk_1")
+  Objectif          Objectif            @relation(fields: [idObjectif], references: [idObjectif], onUpdate: Restrict, map: "Tache_ibfk_2")
+
+  @@index([idObjectif], map: "idObjectif")
+  @@index([idTypeTache], map: "idTypeTache")
+}
+
+model TeamObjectif {
+  idTeamObjectif Int      @id @default(autoincrement())
+  progres        Int
+  termine        Boolean?
+  idObjectif     Int
+  idTeam         Int
+  Objectif       Objectif @relation(fields: [idObjectif], references: [idObjectif], onUpdate: Restrict, map: "TeamObjectif_ibfk_1")
+
+  @@index([idObjectif], map: "idObjectif")
+  @@index([idTeam], map: "idTeam")
+}
+
+model TeamQuest {
+  idTeamQuest Int     @id @default(autoincrement())
+  dateDebut   BigInt? @default(0)
+  dateFin     BigInt? @default(0)
+  idQuest     Int
+  idTeam      Int
+  idEtat      Int
+  terminee    Int?    @default(0)
+  Quest       Quest   @relation(fields: [idQuest], references: [idQuest], onUpdate: Restrict, map: "TeamQuest_ibfk_1")
+  Etat        Etat    @relation(fields: [idEtat], references: [idEtat], onUpdate: Restrict, map: "TeamQuest_ibfk_3")
+
+  @@index([idEtat], map: "idEtat")
+  @@index([idQuest], map: "idQuest")
+  @@index([idTeam], map: "idTeam")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model Tete {
+  idTete    Int?
+  nomTete   String? @db.VarChar(50)
+  locXTete  Int?
+  locYTete  Int?
+  locZTete  Int?
+  idHDBTete Int?
+  lore      Int?
+
+  @@ignore
+}
+
+model TypeCondition {
+  idTeamCondition   Int                 @id
+  nomTypeCondition  String?             @db.VarChar(50)
+  ConditionObjectif ConditionObjectif[]
+}
+
+model TypeReward {
+  idTypeReward  Int      @id @default(autoincrement())
+  nomTypeReward String   @db.VarChar(50)
+  Reward        Reward[]
+}
+
+model TypeTache {
+  idTypeTache  Int     @id @default(autoincrement())
+  nomTypeTache String  @db.VarChar(50)
+  resumeTache  String? @default("Quelque chose") @db.VarChar(50)
+  iconTache    String? @default("DIRT") @db.VarChar(50)
+  Tache        Tache[]
+}
+
+model customplayer {
+  idPlayer   Int     @id @default(autoincrement())
+  uuidPlayer String? @unique(map: "uuidPlayer") @db.VarChar(255)
+  idTeam     Int
+  name       String? @db.VarChar(50)
+
+  @@index([idTeam], map: "idTeam")
+}
+
+model hz_blackmarket_items {
+  market_id  String    @db.VarChar(255)
+  npc_id     String    @db.VarChar(255)
+  item_key   String    @db.VarChar(255)
+  item_type  String    @db.VarChar(20)
+  stock      Int       @default(0)
+  price      Int       @default(0)
+  created_at DateTime? @default(now()) @db.Timestamp(0)
+  updated_at DateTime? @default(now()) @db.Timestamp(0)
+
+  @@id([market_id, npc_id, item_key])
+  @@index([market_id, npc_id], map: "idx_market_npc")
+}
+
+model hz_blackmarket_locations {
+  market_id      String    @db.VarChar(255)
+  npc_id         String    @db.VarChar(255)
+  world          String    @db.VarChar(255)
+  x              Float
+  y              Float
+  z              Float
+  location_index Int
+  created_at     DateTime? @default(now()) @db.Timestamp(0)
+
+  @@id([market_id, npc_id, location_index])
+  @@index([market_id, npc_id], map: "idx_market_npc")
+}
+
+model team {
+  idTeam  Int     @id @default(autoincrement())
+  nomTeam String  @unique(map: "nomTeam") @db.VarChar(255)
+  prefix  String  @db.VarChar(255)
+  mot     String? @db.VarChar(50)
+}
+
+model player_attente {
+  idPlayer      Int           @id @default(autoincrement())
+  pseudoPlayer  String        @unique(map: "player_attente_unique") @db.VarChar(50)
+  uuidPlayer    String        @unique(map: "player_attente_unique_1") @db.VarChar(36)
+  idTeam        Int?
+  isOwner       String?       @db.Char(1)
+  isVerif       Bytes         @default(dbgenerated("('0')")) @db.Binary(1)
+  pseudoDiscord String?       @unique(map: "player_attente_unique_2") @db.VarChar(50)
+  team_attente  team_attente? @relation(fields: [idTeam], references: [idTeam], onDelete: Cascade, map: "player_attente_team_attente_FK")
+
+  @@index([idTeam], map: "player_attente_team_attente_FK")
+}
+
+model player_inscription {
+  idPlayer         Int              @id @default(autoincrement())
+  pseudoPlayer     String           @unique(map: "player_inscription_unique") @db.VarChar(50)
+  uuidPlayer       String           @unique(map: "player_inscription_unique_1") @db.VarChar(36)
+  idTeam           Int
+  isOwner          String?          @default("0") @db.Char(1)
+  pseudoDiscord    String?          @unique(map: "payer_inscription_unique_2") @db.VarChar(50)
+  team_inscription team_inscription @relation(fields: [idTeam], references: [idTeam], onDelete: Cascade, map: "player_inscription_team_inscription_FK")
+
+  @@index([idTeam], map: "player_inscription_team_inscription_FK")
+}
+
+model player_verif {
+  idPlayer     Int        @id @default(autoincrement())
+  pseudoPlayer String     @unique(map: "player_verif_unique") @db.VarChar(50)
+  uuidPlayer   String     @unique(map: "player_verif_unique_1") @db.VarChar(36)
+  idTeam       Int
+  isOwner      String     @default("0") @db.Char(1)
+  team_verif   team_verif @relation(fields: [idTeam], references: [idTeam], onDelete: Cascade, map: "player_verif_team_verif_FK")
+
+  @@index([idTeam], map: "player_verif_team_verif_FK")
+}
+
+model team_attente {
+  idTeam         Int              @id @default(autoincrement())
+  nomTeam        String           @unique(map: "team_attente_unique") @db.VarChar(255)
+  prefixTeam     String           @unique(map: "team_attente_unique_1") @db.Char(3)
+  player_attente player_attente[]
+}
+
+model team_inscription {
+  idTeam             Int                  @id @default(autoincrement())
+  nomTeam            String               @unique(map: "team_inscription_unique") @db.VarChar(255)
+  prefixTeam         String               @unique(map: "team_inscription_unique_1") @db.Char(3)
+  player_inscription player_inscription[]
+}
+
+model team_verif {
+  idTeam       Int            @id @default(autoincrement())
+  nomTeam      String         @unique(map: "team_verif_unique") @db.VarChar(255)
+  prefixTeam   String         @unique(map: "team_verif_unique_1") @db.Char(3)
+  player_verif player_verif[]
+}
+
+model event_global {
+  idEventGlobal   Int          @id @default(autoincrement())
+  typeEventGlobal String       @db.VarChar(100)
+  event_info      event_info[]
+}
+
+model event_info {
+  idEvent        Int          @id @default(autoincrement())
+  nameEvent      String       @db.VarChar(100)
+  dateDebutEvent DateTime     @db.DateTime(0)
+  dateFinEvent   DateTime     @db.DateTime(0)
+  idEventGlobal  Int
+  event_global   event_global @relation(fields: [idEventGlobal], references: [idEventGlobal], onDelete: Cascade, map: "event_global_id_event_global_FK")
+
+  @@index([idEventGlobal], map: "event_global_id_event_global_FK")
+}
+
+model cde_team_lore_notif {
+  idNotif                 BigInt   @id @default(autoincrement())
+  idTeam                  Int
+  idQuest                 Int
+  pallier                 Int      @db.TinyInt
+  valid_count             Int
+  total_count             Int
+  percent                 Decimal  @db.Decimal(6, 2)
+  word_snapshot           String   @db.VarChar(255)
+  pattern_sent            String   @db.VarChar(255)
+  revealed_positions_json String?  @db.LongText
+  sent_at                 DateTime @default(now()) @db.DateTime(0)
+
+  @@index([sent_at], map: "idx_cde_tln_sentat")
+  @@index([idTeam, idQuest], map: "idx_cde_tln_teamquest")
+}
+
+model cde_team_lore_progress {
+  idTeam            Int
+  idQuest           Int
+  last_valid_count  Int       @default(0)
+  last_total_count  Int       @default(0)
+  last_percent      Decimal   @default(0.00) @db.Decimal(6, 2)
+  last_pallier      Int       @default(0) @db.TinyInt
+  pallier_sent_mask Int       @default(0)
+  last_notif_at     DateTime? @db.DateTime(0)
+
+  @@id([idTeam, idQuest])
+  @@index([idQuest], map: "idx_cde_tlp_quest")
+  @@index([idTeam], map: "idx_cde_tlp_team")
+}
